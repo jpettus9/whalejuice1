@@ -1,6 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Use system safe areas on iOS */
+.safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 0); }
+.safe-top { padding-top: max(env(safe-area-inset-top), 0); }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* Base colors */
 :root { --bg:#06070A; --fg:#ffffff; }
 html, body, :root { background: var(--bg); color: var(--fg); }
-[data-theme='light'] { --bg:#fbfdff; --fg:#0a0b0d; }
