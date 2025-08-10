@@ -1,24 +1,17 @@
-# WhaleJuice — Next.js Demo (Expanded)
+# WhaleJuice — Next.js Pro Demo
 
-Pages:
+**Routes**
 - `/` Landing
-- `/sports` Sportsbook index
-- `/sports/nfl` Example league page
-- `/event` Live event demo (fake bankroll, SGP)
-- `/casino` Casino lobby
-- `/casino/tempest-slots` Example game page
-- `/promos` Promos
-- `/vip` Whale Lounge
-- `/banking` Deposit/withdraw demo
-- `/profile/limits` Limits UI
+- `/sports` + `/sports/{nfl,nba,mlb,nhl}`
+- `/event` Live event demo
+- `/casino` + three sample games
+- `/promos`, `/vip`, `/banking`
+- `/profile/limits`, `/profile/settings`
+- `404` + `loading`, robots, sitemap
+- Theme toggle (light/dark)
 
-## Run locally
+**Run**
 ```bash
 npm install
 npm run dev
-# open http://localhost:3000
 ```
-
-## Deploy via GitHub → Vercel
-1. Push to a GitHub repo.
-2. Visit: https://vercel.com/new/clone?repository-url=https://github.com/<user>/<repo>

@@ -9,7 +9,7 @@ export default function LeaguePage(){
   ];
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-3xl font-extrabold">Football</h1>
+      <h1 className="text-3xl font-extrabold">Hockey</h1>
       <div className="mt-6 grid gap-3">
         {games.map(g => (
           <div key={g.id} className="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-between">

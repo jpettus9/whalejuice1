@@ -1,5 +1,51 @@
 'use client';
-import { leagues } from '../../lib/data';
-import { ArrowRight, Zap } from 'lucide-react';
+import Tabs from '../../components/ui/Tabs';
+import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
 import Link from 'next/link';
-export default function SportsIndex(){return(<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10"><div className="flex items-center justify-between"><h1 className="text-3xl font-extrabold">Sportsbook</h1><div className="text-sm text-white/60 flex items-center gap-2"><Zap className="w-4 h-4"/> In‑play available on select events</div></div><div className="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">{leagues.map((l)=>(<Link key={l.key} href={`/sports/${l.key}`} className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:-translate-y-1 transition transform block"><div className="text-lg font-semibold">{l.name}</div><div className="text-sm text-white/60 mt-1">{l.desc}</div><div className="mt-4 inline-flex items-center gap-2 text-cyan-300">Enter <ArrowRight className="w-4 h-4"/></div></Link>))}</div><div className="mt-12"><div className="text-white/60 text-sm">Featured Live Event</div><div className="mt-2 rounded-2xl border border-white/10 bg-gradient-to-r from-white/5 to-cyan-400/10 p-5 flex items-center justify-between"><div><div className="text-lg font-bold">Thunder Bay @ Tempest City</div><div className="text-sm text-white/60">Kickoff in 00:45 • Moneyline • Spread • Total • Props</div></div><a href="/event" className="px-5 py-2 rounded-xl bg-cyan-500 text-black font-semibold">Enter Live</a></div></div></div>);}
+
+const leagues = [
+  { key:'nfl', name:'Football', live:3, upcoming:9 },
+  { key:'nba', name:'Basketball', live:1, upcoming:5 },
+  { key:'mlb', name:'Baseball', live:2, upcoming:7 },
+  { key:'nhl', name:'Hockey', live:0, upcoming:4 },
+];
+
+function LeagueRow({l}){
+  return (
+    <Card className="flex items-center justify-between">
+      <div>
+        <div className="font-semibold">{l.name}</div>
+        <div className="text-xs text-white/60">{l.live} live • {l.upcoming} upcoming</div>
+      </div>
+      <div className="flex gap-2">
+        <Link href={`/sports/${l.key}`} className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm">View</Link>
+        <Link href="/event" className="px-4 py-2 rounded-xl bg-cyan-500 text-black font-semibold text-sm">Live</Link>
+      </div>
+    </Card>
+  );
+}
+
+export default function SportsIndex(){
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+      <h1 className="text-3xl font-extrabold">Sportsbook</h1>
+      <div className="mt-6">
+        <Tabs tabs={[
+          { label:'All', content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">{leagues.map(l=><LeagueRow key={l.key} l={l}/>)}</div> },
+          { label:'Live', content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">{leagues.filter(l=>l.live>0).map(l=><LeagueRow key={l.key} l={l}/>)}</div> },
+          { label:'Upcoming', content: <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">{leagues.filter(l=>l.upcoming>0).map(l=><LeagueRow key={l.key} l={l}/>)}</div> },
+        ]}/>
+      </div>
+      <div className="mt-10">
+        <Card className="flex items-center justify-between">
+          <div>
+            <div className="text-lg font-bold">Thunder Bay @ Tempest City</div>
+            <div className="text-sm text-white/60">Kickoff in 00:45 • Moneyline • Spread • Total • Props</div>
+          </div>
+          <Link href="/event" className="px-5 py-2 rounded-xl bg-cyan-500 text-black font-semibold">Enter Live</Link>
+        </Card>
+      </div>
+    </div>
+  );
+}

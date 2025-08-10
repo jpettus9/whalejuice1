@@ -1,0 +1,1 @@
+export default function Loading(){return(<div className='grid place-items-center min-h-[60vh] text-white/60'>Summoning the storm…</div>);}

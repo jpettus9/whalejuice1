@@ -1,0 +1,1 @@
+export default function NotFound(){return(<div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20'><div className='text-5xl font-black'>404</div><div className='mt-2 text-white/60'>The sea is calm here. Try another route.</div><a href='/' className='mt-6 inline-block px-5 py-2 rounded-xl bg-cyan-500 text-black font-semibold'>Go Home</a></div>);}
