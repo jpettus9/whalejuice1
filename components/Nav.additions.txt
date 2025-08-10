@@ -1,0 +1,5 @@
+Add these links (optional) to your Nav:
+- <a href="/boosts">Boosts</a>
+- <a href="/stats-hub">Stats Hub</a>
+- <a href="/missions">Missions</a>
+- <a href="/rewards">Rewards</a>
