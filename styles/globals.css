@@ -1,5 +1,4 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 html, body, :root { background: #06070A; color: white; }

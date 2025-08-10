@@ -1,8 +1,16 @@
-# WhaleJuice — Next.js Demo
+# WhaleJuice — Next.js Demo (Expanded)
 
 Pages:
-- `/` Landing page
-- `/event` Sportsbook Event demo (fake bankroll, SGP builder)
+- `/` Landing
+- `/sports` Sportsbook index
+- `/sports/nfl` Example league page
+- `/event` Live event demo (fake bankroll, SGP)
+- `/casino` Casino lobby
+- `/casino/tempest-slots` Example game page
+- `/promos` Promos
+- `/vip` Whale Lounge
+- `/banking` Deposit/withdraw demo
+- `/profile/limits` Limits UI
 
 ## Run locally
 ```bash
@@ -11,7 +19,6 @@ npm run dev
 # open http://localhost:3000
 ```
 
-## Deploy via GitHub → CodeSandbox
-1. Create a new public repo (empty).
-2. Upload all files/folders from this project into the repo root.
-3. Open: `https://codesandbox.io/p/github/<your-user>/<your-repo>`
+## Deploy via GitHub → Vercel
+1. Push to a GitHub repo.
+2. Visit: https://vercel.com/new/clone?repository-url=https://github.com/<user>/<repo>
