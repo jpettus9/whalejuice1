@@ -27,12 +27,8 @@ export default function Event(){
     };
   },[tick]);
 
-  function add(sel){ setBets(b=> b.find(x=>x.id===sel.id)? b : [...b, {...sel, stake:25, cash: 25*americanToDecimal(sel.odds)}] ); }
-  useEffect(()=>{
-    // Cash Out drift every tick
-    setBets(bs=>bs.map(b=>({ ...b, cash: Math.max(5, Math.round(b.cash * (0.95 + Math.random()*0.15))) })));
-  },[tick]);
-
+  function add(sel){ setBets(b=> b.find(x=>x.id===sel.id)? b : [...b, {...sel, stake:25, cash: Math.round(25*americanToDecimal(sel.odds))}] ); }
+  useEffect(()=>{ setBets(bs=>bs.map(b=>({ ...b, cash: Math.max(5, Math.round(b.cash * (0.95 + Math.random()*0.15))) }))); },[tick]);
   function cash(i){ const b=bets[i]; const payout = b.cash; setBankroll(v=>v - b.stake + payout); setBets(s=>s.filter((_,idx)=>idx!==i)); }
 
   return (
@@ -44,7 +40,6 @@ export default function Event(){
         </div>
         <div className="text-sm"><span className="text-white/60">Bankroll:</span> <span className="font-semibold">${bankroll.toLocaleString()}</span></div>
       </div>
-
       <div className="mt-6 grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 rounded-2xl border border-white/10 bg-white/5 p-5">
           <div className="flex items-center justify-between text-sm text-white/60"><span>Q3 06:24</span><span className="flex items-center gap-2"><Clock className="w-4 h-4"/>Prices refresh</span></div>

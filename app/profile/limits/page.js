@@ -1,1 +1,38 @@
-'use client';import { useState } from 'react';export default function Limits(){const [daily,setDaily]=useState(500);const [weekly,setWeekly]=useState(2000);const [timeout,setTimeoutDays]=useState(0);return(<div className='mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10'><h1 className='text-3xl font-extrabold'>Profile: Limits</h1><div className='mt-6 grid gap-4'><div className='rounded-2xl border border-white/10 bg-white/5 p-5'><div className='text-sm text-white/60'>Daily Spend Limit</div><div className='mt-2 flex items-center gap-2'><input type='number' value={daily} onChange={e=>setDaily(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/><span className='text-sm text-white/60'>USD</span></div></div><div className='rounded-2xl border border-white/10 bg-white/5 p-5'><div className='text-sm text-white/60'>Weekly Spend Limit</div><div className='mt-2 flex items-center gap-2'><input type='number' value={weekly} onChange={e=>setWeekly(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/><span className='text-sm text-white/60'>USD</span></div></div><div className='rounded-2xl border border-white/10 bg-white/5 p-5'><div className='text-sm text-white/60'>Cool-off (days)</div><div className='mt-2 flex items-center gap-2'><input type='number' value={timeout} onChange={e=>setTimeoutDays(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/><span className='text-sm text-white/60'>0 = off</span></div></div></div><div className='mt-4'><button className='px-5 py-2 rounded-xl bg-cyan-500 text-black font-bold'>Save</button></div></div>);}
+'use client';
+import { useState } from 'react';
+export default function Limits(){
+  const [daily,setDaily]=useState(500);
+  const [weekly,setWeekly]=useState(2000);
+  const [timeout,setTimeoutDays]=useState(0);
+  return (
+    <div className='mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10'>
+      <h1 className='text-3xl font-extrabold'>Profile: Limits</h1>
+      <div className='mt-6 grid gap-4'>
+        <div className='rounded-2xl border border-white/10 bg-white/5 p-5'>
+          <div className='text-sm text-white/60'>Daily Spend Limit</div>
+          <div className='mt-2 flex items-center gap-2'>
+            <input type='number' value={daily} onChange={e=>setDaily(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/>
+            <span className='text-sm text-white/60'>USD</span>
+          </div>
+        </div>
+        <div className='rounded-2xl border border-white/10 bg-white/5 p-5'>
+          <div className='text-sm text-white/60'>Weekly Spend Limit</div>
+          <div className='mt-2 flex items-center gap-2'>
+            <input type='number' value={weekly} onChange={e=>setWeekly(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/>
+            <span className='text-sm text-white/60'>USD</span>
+          </div>
+        </div>
+        <div className='rounded-2xl border border-white/10 bg-white/5 p-5'>
+          <div className='text-sm text-white/60'>Cool-off (days)</div>
+          <div className='mt-2 flex items-center gap-2'>
+            <input type='number' value={timeout} onChange={e=>setTimeoutDays(Number(e.target.value)||0)} className='bg-transparent border border-white/10 rounded-lg px-3 py-2 w-40'/>
+            <span className='text-sm text-white/60'>0 = off</span>
+          </div>
+        </div>
+      </div>
+      <div className='mt-4'>
+        <button className='px-5 py-2 rounded-xl bg-cyan-500 text-black font-bold'>Save</button>
+      </div>
+    </div>
+  );
+}

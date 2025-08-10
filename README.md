@@ -1,16 +1,16 @@
-# WhaleJuice — Next.js Pro Demo
+# WhaleJuice — ULTIMATE demo
 
-**Routes**
-- `/` Landing
-- `/sports` + `/sports/{nfl,nba,mlb,nhl}`
-- `/event` Live event demo
-- `/casino` + three sample games
-- `/promos`, `/vip`, `/banking`
-- `/profile/limits`, `/profile/settings`
-- `404` + `loading`, robots, sitemap
-- Theme toggle (light/dark)
+Includes:
+- Mobile-first layout + sticky bottom nav
+- Sports index + 4 leagues
+- Event page with live cash out drift + quick parlay
+- Boosts, Stats Hub, Missions, Microbetting
+- Personalized Feed + Follows
+- Profile: Limits, Settings, Stat Sheet
+- Casino + 3 games
+- Mock APIs: /api/odds, /api/user
 
-**Run**
+Run:
 ```bash
 npm install
 npm run dev

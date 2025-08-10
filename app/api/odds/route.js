@@ -1,0 +1,1 @@
+export async function GET(){ return Response.json({ ok:true, leagues:['nfl','nba'], markets:['moneyline','total','spread'] }); }

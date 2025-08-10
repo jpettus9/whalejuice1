@@ -1,0 +1,1 @@
+export async function GET(){ return Response.json({ name:'Whale', crowns: 420, tier: 'Silver' }); }

@@ -1,13 +1,12 @@
 import "../styles/globals.css";
-import Nav from "../components/Nav";
-import Footer from "../components/Footer";
+import Nav from "../components/layout/Nav";
+import Footer from "../components/layout/Footer";
 import dynamic from "next/dynamic";
-
-const MobileNav = dynamic(() => import("../components/MobileNav"), { ssr: false });
+const MobileNav = dynamic(()=>import("../components/layout/MobileNav"),{ ssr:false });
 
 export const metadata = { title: "WhaleJuice", description: "Ride the Storm. Bet like a Whale." };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }){
   return (
     <html lang="en">
       <head>

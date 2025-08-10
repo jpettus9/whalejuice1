@@ -1,17 +1,13 @@
-'use client';
 import Card from '../../components/ui/Card';
-
-const systems = [
-  { name:'Road favorites after loss', hit:'58% last 30 days' },
-  { name:'Unders in divisional primetime', hit:'61% season-to-date' },
-  { name:'Player threes vs pace-up teams', hit:'57% last 7 days' },
+const systems=[
+  {name:'Road favorites after loss',hit:'58% last 30 days'},
+  {name:'Divisional primetime unders',hit:'61% season'},
+  {name:'Threes vs pace-up teams',hit:'57% last 7 days'},
 ];
-
 export default function StatsHub(){
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-10">
       <h1 className="text-3xl font-extrabold">Stats Hub</h1>
-      <p className="text-white/70 mt-2 text-sm">Trending systems & quick filters to craft parlays — DK-style.</p>
       <div className="mt-6 grid md:grid-cols-2 gap-4">
         <Card>
           <div className="font-semibold mb-2">Trending Systems</div>
