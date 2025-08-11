@@ -1,3 +1,58 @@
-'use client';import Link from 'next/link';
-export default function League(){const games=[{id:1,home:'Home A',away:'Away A',time:'Today 7:00 PM',live:true},{id:2,home:'Home B',away:'Away B',time:'Today 9:30 PM',live:false},{id:3,home:'Home C',away:'Away C',time:'Tomorrow 8:00 PM',live:false},];
-  return(<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10"><h1 className="text-3xl font-extrabold">Football</h1><div className="mt-6 grid gap-3">{games.map(g=>(<div key={g.id} className="rounded-2xl border border-white/10 bg-white/5 p-4 flex items-center justify-between"><div><div className="font-semibold">{g.away} @ {g.home}</div><div className="text-xs text-white/60">{g.time}</div></div><div className="flex items-center gap-2">{g.live&&<span className="text-xs px-2 py-1 bg-cyan-500/20 text-cyan-300 rounded">LIVE</span>}<Link href="/event" className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm">Markets</Link></div></div>))}</div></div>);}
+'use client';
+import { useEffect, useState } from 'react';
+import OddsGameRow from '../../../components/OddsGameRow';
+import OddsFormatToggle from '../../../components/OddsFormatToggle';
+import BookFilter from '../../../components/BookFilter';
+import BetSlip from '../../../components/BetSlip';
+import SportsbookProvider from '../../../components/SportsbookProvider';
+
+export default function League(){
+  return (
+    <SportsbookProvider>
+      <LeagueInner />
+    </SportsbookProvider>
+  );
+}
+
+function LeagueInner(){
+  const [rows, setRows] = useState(null);
+  const [err, setErr] = useState(null);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const r = await fetch('/api/odds/nfl', { cache: 'no-store' });
+        const json = await r.json();
+        if (!r.ok) throw new Error(json?.error || 'fetch failed');
+        setRows(json.events);
+        const setB = new Set();
+        json.events?.forEach(g => (g.books||[]).forEach(b => setB.add(b)));
+        setBooks([...setB]);
+      } catch (e) { setErr(String(e)); }
+    };
+    run();
+  }, []);
+
+  if (err) return <div className="p-6 text-sm text-red-400">Error: {err}</div>;
+  if (!rows) return <div className="p-6 text-sm text-white/60">Loading live prices…</div>;
+
+  return (
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <h1 className="text-3xl font-extrabold">Football (Live & Upcoming)</h1>
+        <div className="flex items-center gap-3">
+          <BookFilter books={books} />
+          <OddsFormatToggle />
+        </div>
+      </div>
+
+      <div className="mt-6 grid lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 grid gap-3">
+          {rows.map((g) => <OddsGameRow key={g.id} g={g} />)}
+        </div>
+        <div><BetSlip /></div>
+      </div>
+    </div>
+  );
+}
