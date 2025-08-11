@@ -1,32 +1,18 @@
-# WhaleJuice — Sportsbook FULL (Odds API + Essentials + Event)
+# WhaleJuice — Dynamic Sports + Outrights Patch
 
-This single bundle wires **The Odds API** into the sportsbook (NFL/NBA/MLB/NHL),
-adds full sportsbook UX (odds format toggle, book filter, bet slip, favorites),
-and powers a **single-game Event page** with live Moneyline/Spread/Total.
+This patch makes your Sportsbook auto-discover **all active sports** from The Odds API,
+adds **outrights/futures** markets (great for Golf), and provides dynamic routes.
 
-## What you get
-- `app/api/odds/[sport]/route.js` — odds fetcher (cached 60s)
-- `lib/odds.js` — helpers + sport map
-- `components/` — provider, format toggle, book filter, bet slip, game row
-- `app/sports/*/page.js` — league pages wired to live odds
-- `app/event/page.js` — single-game page (`/event?sport=<key|slug>&id=<eventId>`)
-- `.env.example`
+## Added/Updated
+- `app/api/odds/sports/route.js` — lists all sports (cached 5m)
+- `app/api/odds/[sport]/route.js` — now includes `outrights` market
+- `app/sports/page.js` — dynamic index that shows every active sport
+- `app/sports/[sport]/page.js` — one page for ANY sport key
+- `app/event/page.js` — shows an **Outrights** section when present
 
-## Setup (Vercel)
-1) In **Vercel → Project → Settings → Environment Variables** add:
-   - `ODDS_API_KEY` = your key from The Odds API
-2) Commit & redeploy via GitHub.
+## Install
+1) Merge these files into your repo (same paths).
+2) Ensure `ODDS_API_KEY` is set in Vercel → Environment Variables.
+3) Deploy. Visit `/sports` → choose any sport (e.g., golf key) → open a game → see outrights.
 
-## Local dev
-```bash
-cp .env.example .env.local
-# add your real ODDS_API_KEY to .env.local
-npm run dev
-```
-
-## Usage
-- Visit `/sports` → go to a league → click **All markets →** to view an event.
-- League pages: pick a **Book** and toggle **odds format**.
-- Add selections to the **Bet Slip** (parlay math included).
-
-Generated on 2025-08-11T03:45:43.691469Z
+Generated 2025-08-11T04:02:20.426815Z

@@ -3,7 +3,7 @@ export const revalidate = 60; // cache 60s (ISR)
 const HOST = "https://api.the-odds-api.com";
 const API_KEY = process.env.ODDS_API_KEY;
 
-// Map slugs to Odds API sport keys
+// common slugs
 const SPORT_KEYS = {
   nfl: "americanfootball_nfl",
   nba: "basketball_nba",
@@ -40,7 +40,7 @@ export async function GET(req, { params }) {
 
   const u = new URL(`/v4/sports/${sportKey}/odds`, HOST);
   u.searchParams.set("regions", "us");
-  u.searchParams.set("markets", "h2h,spreads,totals");
+  u.searchParams.set("markets", "h2h,spreads,totals,outrights");
   u.searchParams.set("oddsFormat", "american");
   u.searchParams.set("dateFormat", "iso");
   u.searchParams.set("apiKey", API_KEY);
@@ -56,6 +56,7 @@ export async function GET(req, { params }) {
     const h2h = pickFirstMarket(game.bookmakers, "h2h");
     const spreads = pickFirstMarket(game.bookmakers, "spreads");
     const totals = pickFirstMarket(game.bookmakers, "totals");
+    const outrights = pickFirstMarket(game.bookmakers, "outrights");
     return {
       id: game.id,
       sport: sportKey,
@@ -63,13 +64,14 @@ export async function GET(req, { params }) {
       home_team: game.home_team,
       away_team: game.away_team,
       books: collectBooks(game.bookmakers),
-      bookmakers: game.bookmakers, // keep raw so client can pick a specific book
+      bookmakers: game.bookmakers, // keep raw for client-side book filter
       h2h: h2h ? {
         book: h2h.book,
         outcomes: h2h.outcomes.map(o => ({ name: o.name, price: o.price, implied: toImpliedProb(o.price) }))
       } : null,
       spreads: spreads ? { book: spreads.book, outcomes: spreads.outcomes } : null,
       totals: totals ? { book: totals.book, outcomes: totals.outcomes } : null,
+      outrights: outrights ? { book: outrights.book, outcomes: outrights.outcomes } : null,
     };
   });
 

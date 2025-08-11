@@ -1,9 +1,9 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { niceTime, formatOdds } from '../../lib/odds';
 import SportsbookProvider, { useSportsbook } from '../../components/SportsbookProvider';
 import { useBetSlipAdder } from '../../components/BetSlip';
+import { formatOdds, niceTime } from '../../lib/odds';
 
 export default function EventPage(){
   return (
@@ -15,7 +15,7 @@ export default function EventPage(){
 
 function EventInner(){
   const sp = useSearchParams();
-  const sport = sp.get('sport') || 'americanfootball_nfl'; // fallback
+  const sport = sp.get('sport') || 'americanfootball_nfl';
   const id = sp.get('id');
   const { oddsFormat, book } = useSportsbook();
   const addToSlip = useBetSlipAdder();
@@ -24,8 +24,7 @@ function EventInner(){
   const [err, setErr] = useState(null);
 
   useEffect(()=>{
-    const slug = sport.includes('_') ? sport : (sport || 'nfl');
-    const url = `/api/odds/${slug.replace('americanfootball_nfl','nfl').replace('basketball_nba','nba').replace('baseball_mlb','mlb').replace('icehockey_nhl','nhl')}`;
+    const url = `/api/odds/${encodeURIComponent(sport)}`;
     fetch(url, { cache:'no-store' })
       .then(r=>r.json().then(j=>({ok:r.ok, j})))
       .then(({ok,j})=>{
@@ -69,7 +68,7 @@ function EventInner(){
           <h1 className="text-2xl font-black">{game.away_team} @ {game.home_team}</h1>
           <div className="text-xs text-white/60">{niceTime(game.commence_time)}</div>
         </div>
-        <div className="text-xs text-white/60">Book: {book==='Any' ? (game.h2h?.book || game.spreads?.book || game.totals?.book || '—') : book}</div>
+        <div className="text-xs text-white/60">Book: {book==='Any' ? (game.h2h?.book || game.spreads?.book || game.totals?.book || game.outrights?.book || '—') : book}</div>
       </div>
 
       <div className="mt-6 grid gap-4">
@@ -93,9 +92,33 @@ function EventInner(){
             </div>
           );
         })}
+
+        {/* Outrights / Futures (e.g., Golf tournaments) */}
+        <OutrightsSection game={game} pickMarket={pickMarket} oddsFormat={oddsFormat} addToSlip={addToSlip} />
       </div>
 
       <div className="mt-6 text-xs text-white/60">Demo only. No real money.</div>
+    </div>
+  );
+}
+
+function OutrightsSection({ game, pickMarket, oddsFormat, addToSlip }){
+  const m = pickMarket('outrights');
+  const outs = m?.outcomes || [];
+  if (!outs.length) return null;
+  return (
+    <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+      <div className="font-semibold">Futures / Outrights</div>
+      <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 max-h-[28rem] overflow-auto pr-1">
+        {outs.map((o,idx)=> (
+          <button key={idx}
+            onClick={()=>addToSlip({ id: `${game.id}-outright-${idx}`, label:`Outright • ${o.name}`, price:o.price })}
+            className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm text-left">
+            <div className="text-white/80">{o.name}</div>
+            <div className="text-white/60 text-xs mt-0.5">{formatOdds(o.price, oddsFormat)}</div>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
